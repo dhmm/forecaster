@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('weather')]
 class WeatherController extends AbstractController
 {
-    #[Route('/{countryCode}/{cityName}')]
+    #[Route('/{countryCode}/{cityName}' , 'app_weather_forecast')]
     public function forecast(string $countryCode, string $cityName): Response
     {
         $forecasts = [
