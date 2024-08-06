@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Location;
 use App\Form\LocationType;
-use App\Repository\LocationRepository;
+use App\Service\LocationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +15,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class LocationController extends AbstractController
 {
     #[Route('/', name: 'app_location_index', methods: ['GET'])]
-    public function index(LocationRepository $locationRepository): Response
+    public function index(LocationService $locationService): Response
     {
         return $this->render('location/index.html.twig', [
-            'locations' => $locationRepository->findAll(),
+            'locations' => $locationService->getAll(),
         ]);
     }
 

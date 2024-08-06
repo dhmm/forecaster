@@ -2,8 +2,9 @@
 
 namespace App\Command;
 
-use App\Repository\ForecastRepository;
-use App\Repository\LocationRepository;
+use App\Exception\LocationNotFoundException;
+use App\Service\ForecastService;
+use App\Service\LocationService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,8 +20,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ForecastsCommand extends Command
 {
     public function __construct(
-        private LocationRepository $locationRepository,
-        private ForecastRepository $forecastRepository
+        private LocationService $locationService,
+        private ForecastService $forecastService
     )
     {
         parent::__construct();
@@ -44,17 +45,13 @@ class ForecastsCommand extends Command
         if($cityName && $countryCode) {
             $io->title("Forecasts for $cityName, $countryCode");
             
-            $location = $this->locationRepository->findOneBy([
-                'countryCode'=>trim($countryCode),
-                'name' => trim($cityName)
-            ]);
-
+            $location = $this->locationService->getLocationByCityAndCountryCode((string)$cityName, (string)$countryCode);
             if(!$location)
             {
-                throw new \Exception("Location not found");
+                throw new LocationNotFoundException("Location not found");
             }
 
-            $forecasts = $this->forecastRepository->findBy(['location' => $location->getId()]);
+            $forecasts = $this->forecastService->getForecastsByLocationId($location->getId());
             if($forecasts) 
             {
                 $titles = [

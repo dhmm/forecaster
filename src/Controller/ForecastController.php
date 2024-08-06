@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Forecast;
 use App\Form\ForecastType;
-use App\Repository\ForecastRepository;
+use App\Service\ForecastService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +15,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class ForecastController extends AbstractController
 {
     #[Route('/', name: 'app_forecast_index', methods: ['GET'])]
-    public function index(ForecastRepository $forecastRepository): Response
+    public function index(ForecastService $forecastService): Response
     {
         return $this->render('forecast/index.html.twig', [
-            'forecasts' => $forecastRepository->findAll(),
+            'forecasts' => $forecastService->getAll(),
         ]);
     }
 
