@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ForecastRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ForecastRepository::class)]
 class Forecast
@@ -12,37 +14,48 @@ class Forecast
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('api')]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups('api')]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column]
+    #[Groups('api')]
     private ?int $temperatureCelsius = null;
 
     #[ORM\Column]
+    #[Groups('api')]
     private ?int $flTemperatureCelsius = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('api')]
     private ?int $pressure = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('api')]
     private ?int $humidity = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('api')]
     private ?float $windSpeed = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('api')]
     private ?int $windDeg = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('api')]
     private ?int $cloudiness = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('api')]
     private ?string $icon = null;
 
     #[ORM\ManyToOne(inversedBy: 'forecasts')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Ignore]
     private ?Location $location = null;
 
     public function getId(): ?int

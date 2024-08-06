@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location
@@ -32,6 +33,7 @@ class Location
      * @var Collection<int, Forecast>
      */
     #[ORM\OneToMany(targetEntity: Forecast::class, mappedBy: 'location')]
+    #[Ignore]
     private Collection $forecasts;
 
     public function __construct()
