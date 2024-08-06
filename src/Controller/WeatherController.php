@@ -21,7 +21,7 @@ class WeatherController extends AbstractController
     {
         if($location)
         {
-            $forecasts = $repository->getLoccationForecasts($location->getId());
+            $forecasts = $repository->getLocationForecasts($location->getId());
 
             // $forecasts = [
             //     [

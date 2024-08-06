@@ -15,7 +15,7 @@ class ForecastRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Forecast::class);
     }
-    public function getLoccationForecasts(string $locationId)
+    public function getLocationForecasts(string $locationId)
     {
         $query = 
             $this->createQueryBuilder('f')
